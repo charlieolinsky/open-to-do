@@ -12,7 +12,7 @@ const TaskList = () => {
     const [tasks, setTasks] = useState<Task[]>(taskData)
     const [inputValue, setInputValue] = useState<string>("");
 
-    const addTask = (t: string) => {
+    const addTask = (t: string): void => {
         let newData = [...tasks]
         let newTask = {
             id: tasks.length.toString(),
@@ -24,16 +24,20 @@ const TaskList = () => {
         setTasks(newData)
     }
 
+    const deleteTask= (id: string): void => {
+        setTasks(tasks.filter((t) => t.id !== id))
+    }
+
     return(
         <div className="flex flex-col gap-1">
             {tasks.map((t, i) => {
-                return <TaskCard data={t} key={i} />
+                return <TaskCard data={t} deleteTask={deleteTask} key={i} />
             })}
 
-            <div> 
+            <div className="border"> 
                 <form onSubmit={(e) => {addTask(inputValue); e.preventDefault()}} className="flex">
-                    <input onChange={(e) => setInputValue(e.target.value)} className="border flex-1" type="text" value={inputValue}></input>
-                    <button className="bg-blue-200 border flex-none p-2" type="submit">Add</button>
+                    <input onChange={(e) => setInputValue(e.target.value)} className="flex-1" type="text" value={inputValue}></input>
+                    <button className="bg-green-200 flex-none p-5 pl-6 border-l" type="submit"></button>
                 </form> 
             </div>
         </div>
