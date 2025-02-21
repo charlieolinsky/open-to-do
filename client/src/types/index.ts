@@ -1,7 +1,7 @@
 export type Task = {
     id: string,
     title: string,
-    description: string,
+    description?: string,
     isComplete: boolean,
-    dueDate: Date
+    dueDate?: Date
 }

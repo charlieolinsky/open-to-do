@@ -10,12 +10,32 @@ const taskData = [
 
 const TaskList = () => {
     const [tasks, setTasks] = useState<Task[]>(taskData)
+    const [inputValue, setInputValue] = useState<string>("");
+
+    const addTask = (t: string) => {
+        let newData = [...tasks]
+        let newTask = {
+            id: tasks.length.toString(),
+            title: t,
+            isComplete: false,
+        }
+        newData.push(newTask)
+        setInputValue("")
+        setTasks(newData)
+    }
 
     return(
-        <div>
+        <div className="flex flex-col gap-1">
             {tasks.map((t, i) => {
                 return <TaskCard data={t} key={i} />
             })}
+
+            <div> 
+                <form onSubmit={(e) => {addTask(inputValue); e.preventDefault()}} className="flex">
+                    <input onChange={(e) => setInputValue(e.target.value)} className="border flex-1" type="text" value={inputValue}></input>
+                    <button className="bg-blue-200 border flex-none p-2" type="submit">Add</button>
+                </form> 
+            </div>
         </div>
     )
 }
