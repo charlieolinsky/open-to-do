@@ -16,6 +16,15 @@ const TaskList = () => {
     useEffect(() => {
         console.log("DEBUG: ", tasks)
     }, [tasks])
+    useEffect(() => {
+        const testFetch = () => {
+            fetch('http://localhost:8080/')
+                .then((res) => console.log('Server Responded! ', res.text()))
+                .then((data) => console.log(data))
+                .catch((err) => console.error(err))
+            } 
+            testFetch()
+    }, [])
 
     const addTask = (t: string): void => {
         let newData = [...tasks]

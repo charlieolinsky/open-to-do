@@ -1,7 +1,9 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 
 //Middleware? JSON? CORS?
+app.use(cors())
 
 //Setup Sqlite DB
 const sqlite3 = require('sqlite3').verbose() //verbose gives extra err details
