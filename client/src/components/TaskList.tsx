@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import { Task } from "../types";
 
@@ -11,6 +11,11 @@ const taskData = [
 const TaskList = () => {
     const [tasks, setTasks] = useState<Task[]>(taskData)
     const [inputValue, setInputValue] = useState<string>("");
+
+    //DEBUG
+    useEffect(() => {
+        console.log("DEBUG: ", tasks)
+    }, [tasks])
 
     const addTask = (t: string): void => {
         let newData = [...tasks]
@@ -28,10 +33,16 @@ const TaskList = () => {
         setTasks(tasks.filter((t) => t.id !== id))
     }
 
+    const editTask = (id: string, s: string): void => {
+        setTasks(tasks.map((task) => (
+            task.id === id ? {...task, title: s} : task
+        )))
+    }
+
     return(
         <div className="flex flex-col gap-1">
             {tasks.map((t, i) => {
-                return <TaskCard data={t} deleteTask={deleteTask} key={i} />
+                return <TaskCard data={t} deleteTask={deleteTask} editTask={editTask} key={i} />
             })}
 
             <div className="border"> 

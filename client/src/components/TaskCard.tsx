@@ -1,13 +1,26 @@
+import { useEffect, useState } from "react"
 import { Task } from "../types"
 
-const TaskCard = (props: {data: Task; deleteTask(id: string): void}) => {
+type props = {
+    data: Task,
+    deleteTask(id: string): void,
+    editTask(id: string, s: string): void,
+}
+
+const TaskCard = (props: props) => {
+
+    //Local title state for edits
+    const [title, setTitle] = useState<string>(props.data.title);
+
+    //Ensure local title is always synced with title up stream
+    useEffect(() => {
+        setTitle(props.data.title)
+    }, [props.data.title])
 
     return (
         <>
             <div className="flex border flex-auto p-0">
-               <div className="flex-auto">
-                    {props.data.title} 
-               </div>
+               <input onChange={(e) => setTitle(e.target.value)} onBlur={(e) => props.editTask(props.data.id, e.target.value)} className="flex-auto" value={title}></input>
                <div className="flex-none">
                     <button onClick={() => props.deleteTask(props.data.id)} className="bg-red-300 p-5 pl-6 border-l"></button>
                </div>
